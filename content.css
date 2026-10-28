@@ -1,0 +1,58 @@
+@font-face {
+  font-family: 'GasMoneyOverpass';
+  src: url('chrome-extension://__MSG_@@extension_id__/fonts/overpass-700.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* A tiny highway guide sign: sign green, white inset border, rounded corners. */
+.gm-gas-badge {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+  margin: 5px 0 2px;
+  padding: 3px 8px 2px 6px;
+  border-radius: 5px;
+  background: #0b6b47;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.85), 0 0 0 1px #0b6b47;
+  color: #ffffff;
+  font-family: 'GasMoneyOverpass', 'Google Sans', Roboto, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 18px;
+  white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
+}
+
+.gm-gas-badge[data-setup='1'] {
+  background: #f2b705;
+  box-shadow: inset 0 0 0 1px rgba(33, 31, 28, 0.85), 0 0 0 1px #f2b705;
+  color: #211f1c;
+  cursor: pointer;
+}
+
+.gm-gas-badge[data-setup='1']:hover {
+  background: #ffc61a;
+}
+
+.gm-gas-icon {
+  width: 13px;
+  height: 13px;
+  flex: none;
+  margin-top: -1px;
+}
+
+.gm-gas-cost {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+.gm-gas-label {
+  font-weight: 700;
+  font-size: 11px;
+  opacity: 0.82;
+}
+
+.gm-gas-badge { cursor: pointer; }
+.gm-gas-badge:hover { filter: brightness(1.08); }

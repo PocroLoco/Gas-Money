@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "Gas Money",
+  "version": "0.2.1",
+  "description": "Shows what a Google Maps drive costs you in gas, round trip.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Gas Money",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.google.com/maps*",
+        "https://maps.google.com/*"
+      ],
+      "js": [
+        "gas.js",
+        "panel.js",
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "panel.html",
+        "fonts/*.woff2"
+      ],
+      "matches": [
+        "https://www.google.com/*",
+        "https://maps.google.com/*"
+      ]
+    }
+  ]
+}

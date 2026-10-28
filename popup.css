@@ -1,0 +1,191 @@
+@font-face { font-family: 'Overpass'; src: url('fonts/overpass-400.woff2') format('woff2'); font-weight: 400; }
+@font-face { font-family: 'Overpass'; src: url('fonts/overpass-700.woff2') format('woff2'); font-weight: 700; }
+@font-face { font-family: 'Overpass'; src: url('fonts/overpass-800.woff2') format('woff2'); font-weight: 800; }
+
+:root {
+  --sign: #0b6b47;       /* highway guide sign green */
+  --sign-ink: #ffffff;
+  --caution: #f2b705;    /* warning sign yellow */
+  --asphalt: #26282a;    /* text */
+  --concrete: #eeefeb;   /* page */
+  --field: #ffffff;
+  --line: #cfd1cb;
+  --muted: #5e615c;
+  --link: #0b6b47;
+  --stale: #8a6400;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --asphalt: #ecede9;
+    --concrete: #1c1e1d;
+    --field: #262927;
+    --line: #3a3d3b;
+    --muted: #a4a7a2;
+    --link: #6fd3a6;
+    --stale: #f2b705;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  width: 320px;
+  background: var(--concrete);
+  color: var(--asphalt);
+  font: 400 14px/1.4 'Overpass', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Opened as a full tab (first install, or from the yellow badge) */
+body.in-tab { width: auto; }
+body.in-tab .app { max-width: 340px; margin: 56px auto; }
+
+.app { padding: 14px 16px 12px; }
+
+.brand { display: flex; align-items: center; gap: 6px; }
+.brand-icon { width: 16px; height: 16px; color: var(--sign); }
+@media (prefers-color-scheme: dark) { .brand-icon { color: var(--link); } }
+.brand h1 { margin: 0; font-size: 15px; font-weight: 800; letter-spacing: -0.01em; }
+
+/* The hero: a guide sign. Green panel, white inset border, rounded corners. */
+.sign {
+  margin-top: 10px;
+  padding: 4px;
+  border-radius: 10px;
+  background: var(--sign);
+  color: var(--sign-ink);
+}
+.sign-inner {
+  border: 2px solid var(--sign-ink);
+  border-radius: 7px;
+  padding: 12px 14px 11px;
+}
+.sign-distance {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 15px;
+}
+.sign-distance input {
+  width: 3.6ch;
+  padding: 0 0 1px;
+  border: 0;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.55);
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+.sign-distance input:hover { border-bottom-color: #fff; }
+.sign-cost {
+  margin: 8px 0 3px;
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.sign-note { margin: 0; font-size: 13px; font-weight: 700; opacity: 0.9; }
+
+/* Settings */
+.fields { margin-top: 6px; }
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 12px;
+  row-gap: 4px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.row > label { font-weight: 700; font-size: 14px; }
+.hint { grid-column: 1 / -1; margin: 0; font-size: 12px; color: var(--muted); }
+.hint.stale { color: var(--stale); }
+.hint a { color: var(--link); text-underline-offset: 2px; }
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 34px;
+  padding: 0 9px;
+  border: 1.5px solid var(--line);
+  border-radius: 6px;
+  background: var(--field);
+}
+.field:focus-within { border-color: var(--sign); }
+@media (prefers-color-scheme: dark) { .field:focus-within { border-color: var(--link); } }
+.field input {
+  width: 5ch;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--asphalt);
+  font: 700 16px/1 'Overpass', system-ui, sans-serif;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+}
+.unit { font-size: 13px; color: var(--muted); }
+.unit-lead { margin-right: -1px; }
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type='number'] { -moz-appearance: textfield; appearance: textfield; }
+
+/* Round trip switch */
+.switch {
+  appearance: none;
+  position: relative;
+  width: 40px;
+  height: 24px;
+  margin: 0;
+  border-radius: 12px;
+  background: var(--line);
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+.switch::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  transition: transform 120ms ease;
+}
+.switch:checked { background: var(--sign); }
+.switch:checked::before { transform: translateX(16px); }
+
+/* Visible keyboard focus, in caution yellow */
+:focus-visible { outline: 2px solid var(--caution); outline-offset: 2px; }
+.field:has(input:focus-visible) { outline: 2px solid var(--caution); outline-offset: 2px; }
+.sign-distance input:focus-visible { outline-offset: 3px; }
+
+/* Status line */
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 11px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+.status[data-tone='ok'] .dot { background: var(--sign); }
+.status[data-tone='warn'] .dot { background: var(--caution); }
+@media (prefers-color-scheme: dark) { .status[data-tone='ok'] .dot { background: var(--link); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .switch, .switch::before { transition: none; }
+}
